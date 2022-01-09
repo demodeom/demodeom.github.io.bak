@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Java 日期时间 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Java 日期时间操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 日期时间">
+<meta property="og:url" content="http://example.com/2021/11/12/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Java 日期时间操作">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-11T18:44:09.000Z">
+<meta property="article:modified_time" content="2022-01-08T23:50:05.995Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java 日期时间">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Java-日期时间" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/11/12/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" class="article-date">
+  <time datetime="2021-11-11T18:44:09.000Z" itemprop="datePublished">2021-11-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java-%E5%9F%BA%E7%A1%80/">Java 基础</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java 日期时间
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Java 日期时间操作</p>
+<span id="more"></span>
+
+
+<h2 id="LocalDate-LocalTime-LocalDateTime"><a href="#LocalDate-LocalTime-LocalDateTime" class="headerlink" title="LocalDate LocalTime LocalDateTime"></a>LocalDate LocalTime LocalDateTime</h2><p>LocalDate LocalTime LocalDateTime 遵循的是国际标准ISO 8601</p>
+<h3 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h3><p><strong>获取当前日期</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LocalDate ld = LocalDate.now();</span><br></pre></td></tr></table></figure>
+
+<p>可以分别获取 年 月 日</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> year = ld.getYear();</span><br><span class="line"><span class="keyword">int</span> month = ld.getMonth().getValue();</span><br><span class="line"><span class="keyword">int</span> day = ld.getDayOfMonth();</span><br></pre></td></tr></table></figure>
+
+<p>注: 月 日 不是从 0 开始， 1 月 就是 1, 不再是 0</p>
+<p><strong>构建 LocalDate</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LocalDate ld = LocalDate.parse(<span class="string">&quot;2020-12-09&quot;</span>);</span><br><span class="line">LocalDate ld_2 = LocalDate.parse(<span class="string">&quot;12-09-2020&quot;</span>, DateTimeFormatter.ofPattern(<span class="string">&quot;MM-dd-yyyy&quot;</span>));</span><br><span class="line">LocalDate ld_3 = LocalDate.of(<span class="number">2020</span>, <span class="number">12</span> , <span class="number">9</span>);</span><br></pre></td></tr></table></figure>
+
+<p>LocalDate 默认使用 ISO 8601 标准，也可以指定日期格式</p>
+<h3 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h3><p><strong>获取本地时间</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LocalTime lt = LocalTime.now();</span><br></pre></td></tr></table></figure>
+
+<p>可以分别获取 时 分 秒 纳秒</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> hour = lt.getHour();</span><br><span class="line"><span class="keyword">int</span> second = lt.getSecond();</span><br><span class="line"><span class="keyword">int</span> minute = lt.getMinute();</span><br><span class="line"><span class="keyword">int</span> nano = lt.getNano();</span><br></pre></td></tr></table></figure>
+
+<p><strong>构建指定本地时间</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LocalTime lt = LocalTime.parse(<span class="string">&quot;13:24:30&quot;</span>);</span><br><span class="line">LocalTime lt_1 = LocalTime.of(<span class="number">13</span>, <span class="number">24</span>, <span class="number">30</span>, <span class="number">0</span>);</span><br><span class="line">LocalTime lt_2 = LocalTime.parse(<span class="string">&quot;13:24:30&quot;</span>, DateTimeFormatter.ofPattern(<span class="string">&quot;H:i:s&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="日期时间"><a href="#日期时间" class="headerlink" title="日期时间"></a>日期时间</h3><p><strong>获取指定本地时间</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime ldt = LocalDateTime.now();</span><br></pre></td></tr></table></figure>
+
+<p>可以分别获取 年 月 日 时 分 秒 纳秒</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> year = ldt.getYear();</span><br><span class="line"><span class="keyword">int</span> month = ldt.getMonth().getValue();</span><br><span class="line"><span class="keyword">int</span> day = ldt.getDayOfMonth();</span><br><span class="line"><span class="keyword">int</span> hour = ldt.getHour();</span><br><span class="line"><span class="keyword">int</span> second = ldt.getSecond();</span><br><span class="line"><span class="keyword">int</span> minute = ldt.getMinute();</span><br><span class="line"><span class="keyword">int</span> nano = ldt.getNano();</span><br></pre></td></tr></table></figure>
+
+<p><strong>构建本地日期时间</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime m_ldt_1 = LocalDateTime.of(<span class="number">2021</span>, <span class="number">6</span>, <span class="number">11</span>, <span class="number">23</span>, <span class="number">12</span>, <span class="number">24</span>, <span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 LocalDate 和 LocalTime 构建</span></span><br><span class="line">LocalDate mld = LocalDate.of(<span class="number">2021</span>, <span class="number">6</span>, <span class="number">11</span>);</span><br><span class="line">LocalTime mlt = LocalTime.of(<span class="number">23</span>, <span class="number">12</span>, <span class="number">24</span>);</span><br><span class="line">LocalDateTime m_ldt_2 = LocalDateTime.of(mld, mlt);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解析默认格式</span></span><br><span class="line">LocalDateTime s_ldt_1 = LocalDateTime.parse(<span class="string">&quot;2021-12-13T23:12:24&quot;</span>);</span><br><span class="line"><span class="comment">// 解析自定义格式</span></span><br><span class="line">LocalDateTime s_ldt_2 = LocalDateTime.parse(<span class="string">&quot;2021-12-13 23:12:24&quot;</span>, DateTimeFormatter.ofPattern(<span class="string">&quot;y-M-d H:m:s&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="时区"><a href="#时区" class="headerlink" title="时区"></a>时区</h2><h3 id="ZoneId"><a href="#ZoneId" class="headerlink" title="ZoneId"></a>ZoneId</h3><p>获取当前时区</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZoneId zoneId = ZoneId.systemDefault();</span><br><span class="line"></span><br><span class="line">System.out.println(zoneId);</span><br></pre></td></tr></table></figure>
+
+<p>获取指定时区</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZoneId zoneId = ZoneId.systemDefault(<span class="string">&quot;America/New_York&quot;</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(zoneId);</span><br></pre></td></tr></table></figure>
+
+<h3 id="ZonedDateTime"><a href="#ZonedDateTime" class="headerlink" title="ZonedDateTime"></a>ZonedDateTime</h3><p>获取当前时区的时期时间</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZonedDateTime zonedDateTime = ZonedDateTime.now();</span><br><span class="line">System.out.println(<span class="string">&quot;本地时区&quot;</span> + zonedDateTime);</span><br><span class="line"><span class="comment">// 本地时区 2021-11-26T08:34:05.919145+08:00[Asia/Shanghai]</span></span><br></pre></td></tr></table></figure>
+
+<p>获取于此同时， 纽约日期时间</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZonedDateTime zonedDateTimeNewYork = ZonedDateTime.now(ZoneId.of(<span class="string">&quot;America/New_York&quot;</span>));</span><br><span class="line">System.out.println(<span class="string">&quot;纽约时区&quot;</span> + zonedDateTimeNewYork);</span><br><span class="line"><span class="comment">// 纽约时区 2021-11-25T19:34:05.929306-05:00[America/New_York]</span></span><br></pre></td></tr></table></figure>
+
+<p>从一个时区转另一个时区</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime ldt = LocalDateTime.now();</span><br><span class="line"></span><br><span class="line">ZonedDateTime zdt_local = ldt.atZone(ZoneId.systemDefault());</span><br><span class="line">ZonedDateTime zdt_new_york = zdt_local.withZoneSameInstant(ZoneId.of(<span class="string">&quot;America/New_York&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="ZonedDateTime转换"><a href="#ZonedDateTime转换" class="headerlink" title="ZonedDateTime转换"></a>ZonedDateTime转换</h3><p>ZonedDateTime 转 long</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ZonedDateTime zonedDateTime = ZonedDateTime.now();</span><br><span class="line">Long timestamps = zonedDateTime.toEpochSecond();</span><br><span class="line">System.out.println(<span class="string">&quot;本地时间戳&quot;</span> + timestamps);</span><br><span class="line"><span class="comment">// 本地时间戳 1637887053</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>toLocalDateTime</li>
+<li>toLocalDate</li>
+<li>toLocalTime</li>
+</ul>
+<p>LocalDateTime 转 ZonedDateTime</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime ldt = LocalDateTime.now();</span><br><span class="line"></span><br><span class="line">ZonedDateTime zdt_local = ldt.atZone(ZoneId.systemDefault());</span><br><span class="line">ZonedDateTime zdt_new_york = ldt.atZone(ZoneId.of(<span class="string">&quot;America/New_York&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="时间调整"><a href="#时间调整" class="headerlink" title="时间调整"></a>时间调整</h2><h3 id="with"><a href="#with" class="headerlink" title="with"></a>with</h3><p>支持 LocalDateTime LocalDate LocalTime ZoneDateTime</p>
+<ul>
+<li>withYear 设置指定年</li>
+<li>withMonth 设置指定月</li>
+<li>…</li>
+</ul>
+<h3 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h3><p>在当前日期时间基础上, 添加指定的时间, 比如: <code>plusYears(2)</code> 表示增加 2 年</p>
+<p><code>plus</code> 表示增加, <code>minus</code> 表示减少</p>
+<ul>
+<li><code>plusYears()</code>  <code>minusYears()</code> 年</li>
+<li><code>plusMonths()</code>  <code>minusMonths()</code> 月</li>
+<li><code>plusDays()</code>  <code>minusDays()</code> 日</li>
+<li><code>plusWeeks()</code>  <code>minusWeeks()</code> 周</li>
+<li><code>plusHours()</code>  <code>minusHours()</code> 时</li>
+<li><code>plusMinutes()</code>  <code>minusMinutes()</code> 分</li>
+<li><code>plusSeconds()</code>  <code>minusSeconds()</code> 秒</li>
+<li><code>plusNanos()</code>  <code>minusNanos()</code> 纳秒</li>
+</ul>
+<h3 id="时间片"><a href="#时间片" class="headerlink" title="时间片"></a>时间片</h3><h3 id="时间片-1"><a href="#时间片-1" class="headerlink" title="时间片"></a>时间片</h3><p>Period Duration 继承自, TemporalAmount 表示一段日期时间; Period 表示一段日期,  Duration 表示一段时间</p>
+<ul>
+<li><p><code>Duration.ofDays(1)</code></p>
+</li>
+<li><p><code>Duration.ofHours(1)</code></p>
+</li>
+<li><p>…</p>
+</li>
+<li><p><code>Period.ofYears(1)</code></p>
+</li>
+<li><p>…</p>
+</li>
+</ul>
+<h3 id="运算-1"><a href="#运算-1" class="headerlink" title="运算"></a>运算</h3><p><code>plus(TemporalAmount)</code> 增加 时间片<br><code>minus(TemporalAmount)</code> 减少 时间片</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LocalDateTime ldt = LocalDateTime.of(<span class="number">2021</span>, <span class="number">1</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">24</span>, <span class="number">12</span>);</span><br><span class="line">Duration five_minute = Duration.ofMinutes(<span class="number">10</span>);</span><br><span class="line">LocalDateTime ldt_new = ldt.plus(five_minute);</span><br><span class="line">System.out.println(ldt_new);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2021-01-12T13:34:12</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="日期时间字符串"><a href="#日期时间字符串" class="headerlink" title="日期时间字符串"></a>日期时间字符串</h2><h3 id="时间日期格式"><a href="#时间日期格式" class="headerlink" title="时间日期格式"></a>时间日期格式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ZonedDateTime zonedDateTime = ZonedDateTime.now();</span><br><span class="line">String str_t = zonedDateTime.format(DateTimeFormatter.ofPattern(<span class="string">&quot;MM-dd-yyyy&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Symbol  Meaning                     Presentation      Examples</span><br><span class="line">------  -------                     ------------      -------</span><br><span class="line">G       era                         text              AD; Anno Domini; A</span><br><span class="line">y       year-of-era                 year              2004; 04</span><br><span class="line">D       day-of-year                 number            189</span><br><span class="line">M/L     month-of-year               number/text       7; 07; Jul; July; J</span><br><span class="line">d       day-of-month                number            10</span><br><span class="line">g       modified-julian-day         number            2451334</span><br><span class="line">Q/q     quarter-of-year             number/text       3; 03; Q3; 3rd quarter</span><br><span class="line">Y       week-based-year             year              1996; 96</span><br><span class="line">w       week-of-week-based-year     number            27</span><br><span class="line">W       week-of-month               number            4</span><br><span class="line">E       day-of-week                 text              Tue; Tuesday; T</span><br><span class="line">e/c     localized day-of-week       number/text       2; 02; Tue; Tuesday; T</span><br><span class="line">F       day-of-week-in-month        number            3</span><br><span class="line">a       am-pm-of-day                text              PM</span><br><span class="line">h       clock-hour-of-am-pm (1-12)  number            12</span><br><span class="line">K       hour-of-am-pm (0-11)        number            0</span><br><span class="line">k       clock-hour-of-day (1-24)    number            24</span><br><span class="line">H       hour-of-day (0-23)          number            0</span><br><span class="line">m       minute-of-hour              number            30</span><br><span class="line">s       second-of-minute            number            55</span><br><span class="line">S       fraction-of-second          fraction          978</span><br><span class="line">A       milli-of-day                number            1234</span><br><span class="line">n       nano-of-second              number            987654321</span><br><span class="line">N       nano-of-day                 number            1234000000</span><br><span class="line">V       time-zone ID                zone-id           America/Los_Angeles; Z; -08:30</span><br><span class="line">v       generic time-zone name      zone-name         Pacific Time; PT</span><br><span class="line">z       time-zone name              zone-name         Pacific Standard Time; PST</span><br><span class="line">O       localized zone-offset       offset-O          GMT+8; GMT+08:00; UTC-08:00</span><br><span class="line">X       zone-offset &#x27;Z&#x27; for zero    offset-X          Z; -08; -0830; -08:30; -083015; -08:30:15</span><br><span class="line">x       zone-offset                 offset-x          +0000; -08; -0830; -08:30; -083015; -08:30:15</span><br><span class="line">Z       zone-offset                 offset-Z          +0000; -0800; -08:00</span><br><span class="line">p       pad next                    pad modifier      1</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="知识扩展"><a href="#知识扩展" class="headerlink" title="知识扩展"></a>知识扩展</h2><h3 id="MySql"><a href="#MySql" class="headerlink" title="MySql"></a>MySql</h3><p>LocalDate 对应数据库的 Date<br>LocalTime 对应数据库的 time<br>LocalDateTime 对应数据库的 datetime</p>
+<h3 id="时间戳"><a href="#时间戳" class="headerlink" title="时间戳"></a>时间戳</h3><p>获取当前时间辍， 单位(毫秒)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Long timestamps = System.currentTimeMillis();</span><br></pre></td></tr></table></figure>
+
+<p>MySQL 使用无符号整形存储单位为秒的时间辍</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/11/12/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" data-id="cky6kogvt0001rsuqhxrr129u" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" rel="tag">Java 日期时间</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-PHP/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Ubuntu 搭建开发环境-PHP
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/11/10/Win-%E9%9A%90%E8%97%8F%E5%88%86%E5%8C%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Win 隐藏分区</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java-%E5%9F%BA%E7%A1%80/">Java 基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCv/">OpenCv</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Boot/">Spring Boot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swoole/">Swoole</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue3/">Vue3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Win/">Win</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/" rel="tag">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/" rel="tag">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" rel="tag">Java 日期时间</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/" rel="tag">Json</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCv/" rel="tag">OpenCv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDO/" rel="tag">PDO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RedisServer/" rel="tag">RedisServer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMwareWorkstationPro/" rel="tag">VMwareWorkstationPro</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/" rel="tag">VirtualBox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win/" rel="tag">Win</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win10-Win11-WinGet/" rel="tag">Win10 Win11 WinGet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WinGet/" rel="tag">WinGet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" rel="tag">信号量</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" rel="tag">共享内存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%8C%BA/" rel="tag">分区</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" rel="tag">开发环境</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%88%E6%9C%AC/" rel="tag">版本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/" rel="tag">视频播放器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="tag">面向对象</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Install/" style="font-size: 10px;">Install</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" style="font-size: 10px;">Java 日期时间</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/OCR/" style="font-size: 10px;">OCR</a> <a href="/tags/OpenCv/" style="font-size: 10px;">OpenCv</a> <a href="/tags/PDO/" style="font-size: 10px;">PDO</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/RedisServer/" style="font-size: 10px;">RedisServer</a> <a href="/tags/Ubuntu/" style="font-size: 13.33px;">Ubuntu</a> <a href="/tags/VMwareWorkstationPro/" style="font-size: 10px;">VMwareWorkstationPro</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/Win/" style="font-size: 16.67px;">Win</a> <a href="/tags/Win10-Win11-WinGet/" style="font-size: 10px;">Win10 Win11 WinGet</a> <a href="/tags/WinGet/" style="font-size: 10px;">WinGet</a> <a href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" style="font-size: 10px;">信号量</a> <a href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" style="font-size: 13.33px;">共享内存</a> <a href="/tags/%E5%88%86%E5%8C%BA/" style="font-size: 10px;">分区</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 10px;">安装</a> <a href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" style="font-size: 20px;">开发环境</a> <a href="/tags/%E7%89%88%E6%9C%AC/" style="font-size: 10px;">版本</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 13.33px;">笔记</a> <a href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/" style="font-size: 10px;">视频播放器</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 10px;">面向对象</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E8%BD%AF%E4%BB%B6-%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/">Ubuntu 软件-视频播放器</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Node-js/">Ubuntu 搭建开发环境-Node.js</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Python/">Ubuntu 搭建开发环境-Python</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Java/">Ubuntu 搭建开发环境-Java</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

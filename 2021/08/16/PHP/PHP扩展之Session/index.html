@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>PHP扩展之Session | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PHP Session 扩展详解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP扩展之Session">
+<meta property="og:url" content="http://example.com/2021/08/16/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8BSession/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PHP Session 扩展详解">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-15T21:38:38.000Z">
+<meta property="article:modified_time" content="2022-01-08T23:48:14.825Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-PHP/PHP扩展之Session" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/08/16/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8BSession/" class="article-date">
+  <time datetime="2021-08-15T21:38:38.000Z" itemprop="datePublished">2021-08-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PHP扩展之Session
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>PHP Session 扩展详解</p>
+<span id="more"></span>
+
+
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>约束： 如果配置后有相关函数， 说明配置支持通过函数动态设置</p>
+<h3 id="name"><a href="#name" class="headerlink" title="name"></a>name</h3><p><code>session.name string</code> session.name 指定会话名以用做 cookie 的名字。只能由字母数字组成，默认为 PHPSESSID;  参见 session_name()</p>
+<p>请求响应头部可以看到类似一下信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: PHPSESSID=t3qhqf1159vn41hrem00r6v3b0; path=/</span><br></pre></td></tr></table></figure>
+
+<h3 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h3><p><code>session.auto_start bool</code> session.auto_start 指定会话模块是否在请求开始时自动启动一个会话。默认为 0（不启动）。 </p>
+<p>只有在有需要的时候使用 <code>session_start()</code> 开启， 默认关闭，可以节约资源</p>
+<h3 id="gc"><a href="#gc" class="headerlink" title="gc"></a>gc</h3><p>session 垃圾回收是通过两个参数控制的</p>
+<p><code>session.gc_probability int</code> session.gc_probability 与 session.gc_divisor 合起来用来管理 gc（garbage collection 垃圾回收）进程启动的概率。默认为 1。详见 session.gc_divisor。 </p>
+<p><code>session.gc_divisor int</code> session.gc_divisor 与 session.gc_probability 合起来定义了在每个会话初始化时启动 gc（garbage collection 垃圾回收）进程的概率。此概率用 gc_probability/gc_divisor 计算得来。例如 1/100 意味着在每个请求中有 1% 的概率启动 gc 进程。session.gc_divisor 默认为 100。 </p>
+<p><code>session.gc_maxlifetime int</code><br>    session.gc_maxlifetime 指定过了多少秒之后数据就会被视为“垃圾”并被清除。 垃圾搜集可能会在 session 启动的时候开始（ 取决于session.gc_probability 和 session.gc_divisor）。 </p>
+<p><strong>笔记</strong></p>
+<p>Session 由两部分组成， session_id 和 session_value ;</p>
+<p>session_value存储在服务器， 访问 session_value 需要 session_id， 生命周期由服务端维护； </p>
+<p>session_id 存储在客户端的 cookie 中， 生命周期由客户端维护；</p>
+<p>服务端 session 清理是概率性的， 可能存在延迟； 客户端 cookie 生命周期可以手动修改延长；因此在手动修改客户端cookie生命周期和session清理延迟的情况下， 出现 session 已经过期， 但是仍然有效的问题</p>
+<p>如何解决： </p>
+<ul>
+<li>session_value 记录 session 创建时间</li>
+<li>访问 session 是， 通过当前事件和创建时间判断 session 是否过期</li>
+</ul>
+<p>服务端通过概率事件的方式来启动GC， 可以提高服务性能</p>
+<p>可以通过配置 gc_probability 和 gc_divisor 为相同的值， 来解决GC延迟的问题， 但是会降低性能</p>
+<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p><code> session.use_cookies bool</code> session.use_cookies 指定是否在客户端用 cookie 来存放会话 ID。默认为 1（启用）。 </p>
+<p><code>session.use_only_cookies bool</code> session.use_only_cookies 指定是否在客户端仅仅使用 cookie 来存放会话 ID。。启用此设定可以防止有关通过 URL 传递会话 ID 的攻击。默认值为1（启用） </p>
+<p><code>session.cookie_lifetime int</code> session.cookie_lifetime 以秒数指定了发送到浏览器的 cookie 的生命周期。值为 0 表示“直到关闭浏览器”。默认为 0。参见 session_get_cookie_params() 和 session_set_cookie_params()。 </p>
+<p><code>session.cookie_path string</code> session.cookie_path 指定了要设定会话 cookie 的路径。默认为 /。参见 session_get_cookie_params() 和 session_set_cookie_params()。 </p>
+<p><code>session.cookie_domain string</code> session.cookie_domain 指定了要设定会话 cookie 的域名。默认为无，表示根据 cookie 规范产生 cookie 的主机名。参见 session_get_cookie_params() 和 session_set_cookie_params()。 </p>
+<p><code>session.cookie_secure bool</code> session.cookie_secure 指定是否仅通过安全连接发送 cookie。默认为 off。此设定是 PHP 4.0.4 添加的。参见 session_get_cookie_params() 和 session_set_cookie_params()。 </p>
+<p><code>session.cookie_httponly bool</code> 设置 cookie 仅能够通过 HTTP 协议访问。 它意味着 cookie 无法通过类似 JavaScript 这样的脚本语言访问。 该设置可有效避免 XSS 攻击窃取身份（但并非所有浏览器都支持）。 </p>
+<p><code>session.cache_limiter string</code> session.cache_limiter 指定会话页面所使用的缓冲控制方法（ none/nocache/ private/ private_no_expire/public）。默认为 nocache。参见 session_cache_limiter() 文档查看各个值的含义。 </p>
+<p><code>session.cache_expire int</code> session.cache_expire 以分钟数指定缓冲的会话页面的存活期，此设定对 nocache 缓冲控制方法无效。默认为 180。参见 session_cache_expire()。 </p>
+<h3 id="禁用-cookie-后-session-如何生效"><a href="#禁用-cookie-后-session-如何生效" class="headerlink" title="禁用 cookie 后 session 如何生效"></a>禁用 cookie 后 session 如何生效</h3><p><code>session.use_trans_sid bool</code> session.use_trans_sid 指定是否启用透明 SID 支持。默认为 0（禁用）。 </p>
+<p><code>session.trans_sid_tags string</code> 开启支持透明 sid 时， session.trans_sid_tags 指定是否需要重写 HTML 标签来包含 session id。 默认为 a=href,area=href,frame=src,input=src,form= form 是个特殊标签。 <input hidden="session_id" name="session_name"> 作为表单变量添加。 </p>
+<p><code>session.trans_sid_hosts string</code> 当透明 sid 支持开启时，session.trans_sid_hosts 设置了要重写包含 session 的主机名， 默认为 <code>$_SERVER[&#39;HTTP_HOST&#39;]</code>。 多个主机用半角逗号 “,” 分隔；主机名之间不能用空格。 例如 php.net,wiki.php.net,bugs.php.net。 </p>
+<p><code>session.sid_length int</code> 通过 session.sid_length 可以设置 session ID 字符串长度。 Session ID 的长度可以是在 22 到 256 之间。 默认是 32。 如果需要较好的兼容性可以设置为 32、40 等。 较长的 session ID 会更难猜测。 推荐至少要 32 个字符。 </p>
+<p><code>session.sid_bits_per_character int</code> session.sid_per_character 设置要编码 session ID 字符的比特数。 可能的设置有： ‘4’（0-9、a-f）、’5’（0-9、a-v）、’6’（0-9、a-z、A-Z、”-“、”,”）。 默认为 4。 更多的比特数会产生更强健的 session ID。 对于绝大多数环境，推荐值是 5。 </p>
+<p>面试可能会遇到这样的问题，如何解决呢？</p>
+<p>以 a 标签为例， 将 cookie 添加到 a 标签 src 属性之后， 这样服务器就可以拿到 a 标签地址</p>
+<p><code>trans_sid_tags</code> 配置支持的标签以及标签对应的属性</p>
+<p><strong>总结：</strong> 虽然解决问题， 但是带来了安全问题； 比如： 可以通过脚本轻易获取 cookie</p>
+<h3 id="upload"><a href="#upload" class="headerlink" title="upload"></a>upload</h3><p><code>session.upload_progress.enabled boolean </code> 启用上传进度跟踪，填充 <code>$_SESSION</code> 变量。默认为 1，启用。</p>
+<p><code>session.upload_progress.cleanup boolean</code> 读取所有 POST 数据（即上传完成）后立即清除进度信息。默认为 1，启用。</p>
+<p><code>session.upload_progress.prefix string</code> 用于<code>$_SESSION</code>中的上传进度键的前缀。这个键将与<code>$_POST[ini_get(&quot;session.upload_progress.name&quot;)]</code>的值相连接，以提供一个唯一的索引。默认为 <code>upload_progress_</code>。</p>
+<p><code>session.upload_progress.name string</code> 在<code>$_SESSION</code>中用于存储进度信息的键的名称。参见<code>session.upload_progress.prefix</code>。如果<code>$_POST[ini_get(&quot;session.upload_progress.name&quot;)]</code>没有通过或可用，上传进度将不会被记录。默认为 <code>&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</code>。</p>
+<p><code>session.upload_progress.freq mixed</code> 定义上传进度信息的更新频率。这可以以字节为单位（即 “每100字节后更新进度信息”），或以百分比为单位（即 “每收到整个文件大小的1%后更新进度信息”）。默认为 “1%”。</p>
+<p><code>session.upload_progress.min_freq</code> int 更新之间的最小延迟，以秒为单位。默认为“1”（一秒）。</p>
+<p>除非<code>session.upload_progress.enabled</code>被启用，并且<code>$_POST[ini_get(&quot;session.upload_progress.name&quot;)]</code>变量被设置，否则上传进度将不会被注册。关于此功能的细节，请参见会话上传进度。</p>
+<p> 当 session.upload_progress.enabled INI 选项开启时，PHP 能够在每一个文件上传时监测上传进度。 这个信息对上传请求自身并没有什么帮助，但在文件上传时应用可以发送一个POST请求到终端（例如通过XHR）来检查这个状态</p>
+<p>当一个上传在处理中，同时POST一个与INI中设置的<code>session.upload_progress.name</code>同名变量时，上传进度可以在<code>$_SESSION</code>中获得。 当PHP检测到这种POST请求时，它会在<code>$_SESSION</code>中添加一组数据, 索引是 <code>session.upload_progress.prefix </code>与 <code>session.upload_progress.name</code>连接在一起的值。 通常这些键值可以通过读取INI设置来获得，例如 </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$key</span> = ini_get(<span class="string">&quot;session.upload_progress.prefix&quot;</span>) . ini_get(<span class="string">&quot;session.upload_progress.name&quot;</span>);</span><br><span class="line">var_dump(<span class="variable">$_SESSION</span>[<span class="variable">$key</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>通过将<code>$_SESSION[$key][&quot;cancel_upload&quot;]</code>设置为<code>true</code>，还可以取消一个正在处理中的文件上传。 当在同一个请求中上传多个文件，它仅会取消当前正在处理的文件上传和未处理的文件上传，但是不会移除那些已经完成的上传。 当一个上传请求被这么取消时，<code>$_FILES</code>中的error将会被设置为 <code>UPLOAD_ERR_EXTENSION</code>。</p>
+<p><code>session.upload_progress.freq </code>和 <code>session.upload_progress.min_freq</code> INI选项控制了上传进度信息应该多久被重新计算一次。 通过合理设置这两个选项的值，这个功能的开销几乎可以忽略不计。 </p>
+<h3 id="lazy-write"><a href="#lazy-write" class="headerlink" title="lazy_write"></a>lazy_write</h3><p><code>session.lazy_write bool</code> session.lazy_write，设置成 1 的含义是： 只有 session 数据发生变化时才需要重新写入。默认为开启状态 1。 </p>
+<p> session.serialize_handler string<br>    session.serialize_handler 定义用来序列化／反序列化的处理器名字。 当前支持 PHP 序列化格式 (名为 php_serialize)、 PHP PHP 内部格式 (名为 php 及 php_binary) 和 WDDX (名为 wddx)。 如果 PHP 编译时加入了 WDDX 支持，则只能用 WDDX。 php_serialize 在内部简单地直接使用 serialize/unserialize 函数，并且不会有 php 和 php_binary 所具有的限制。 使用较旧的序列化处理器导致 $_SESSION 的索引既不能是数字也不能包含特殊字符(| and !) 。 使用 php_serialize 避免脚本退出时，数字及特殊字符索引导致出错。 默认使用 php。 </p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/16/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8BSession/" data-id="cky6kogwb0016rsuqg7vx8r12" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/11/03/Java/Java%20%E5%9F%BA%E7%A1%80/%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          编译运行
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/15/PHP/PHP-%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">PHP 版本支持</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java-%E5%9F%BA%E7%A1%80/">Java 基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCv/">OpenCv</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Boot/">Spring Boot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swoole/">Swoole</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue3/">Vue3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Win/">Win</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/" rel="tag">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/" rel="tag">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" rel="tag">Java 日期时间</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/" rel="tag">Json</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCv/" rel="tag">OpenCv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDO/" rel="tag">PDO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RedisServer/" rel="tag">RedisServer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMwareWorkstationPro/" rel="tag">VMwareWorkstationPro</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/" rel="tag">VirtualBox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win/" rel="tag">Win</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win10-Win11-WinGet/" rel="tag">Win10 Win11 WinGet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WinGet/" rel="tag">WinGet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" rel="tag">信号量</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" rel="tag">共享内存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%8C%BA/" rel="tag">分区</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" rel="tag">开发环境</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%88%E6%9C%AC/" rel="tag">版本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/" rel="tag">视频播放器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="tag">面向对象</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Install/" style="font-size: 10px;">Install</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" style="font-size: 10px;">Java 日期时间</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/OCR/" style="font-size: 10px;">OCR</a> <a href="/tags/OpenCv/" style="font-size: 10px;">OpenCv</a> <a href="/tags/PDO/" style="font-size: 10px;">PDO</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/RedisServer/" style="font-size: 10px;">RedisServer</a> <a href="/tags/Ubuntu/" style="font-size: 13.33px;">Ubuntu</a> <a href="/tags/VMwareWorkstationPro/" style="font-size: 10px;">VMwareWorkstationPro</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/Win/" style="font-size: 16.67px;">Win</a> <a href="/tags/Win10-Win11-WinGet/" style="font-size: 10px;">Win10 Win11 WinGet</a> <a href="/tags/WinGet/" style="font-size: 10px;">WinGet</a> <a href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" style="font-size: 10px;">信号量</a> <a href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" style="font-size: 13.33px;">共享内存</a> <a href="/tags/%E5%88%86%E5%8C%BA/" style="font-size: 10px;">分区</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 10px;">安装</a> <a href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" style="font-size: 20px;">开发环境</a> <a href="/tags/%E7%89%88%E6%9C%AC/" style="font-size: 10px;">版本</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 13.33px;">笔记</a> <a href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/" style="font-size: 10px;">视频播放器</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 10px;">面向对象</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E8%BD%AF%E4%BB%B6-%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/">Ubuntu 软件-视频播放器</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Node-js/">Ubuntu 搭建开发环境-Node.js</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Python/">Ubuntu 搭建开发环境-Python</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Java/">Ubuntu 搭建开发环境-Java</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

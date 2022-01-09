@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>PHP扩展之PDO | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PHP扩展之PDO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP扩展之PDO">
+<meta property="og:url" content="http://example.com/2021/08/15/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8BPDO/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PHP扩展之PDO">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-15T12:41:06.000Z">
+<meta property="article:modified_time" content="2022-01-08T23:25:54.293Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PDO">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-PHP/PHP扩展之PDO" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/08/15/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8BPDO/" class="article-date">
+  <time datetime="2021-08-15T12:41:06.000Z" itemprop="datePublished">2021-08-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PHP/">PHP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PHP扩展之PDO
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>PHP扩展之PDO</p>
+<span id="more"></span>
+
+
+<h2 id="支持的驱动"><a href="#支持的驱动" class="headerlink" title="支持的驱动"></a>支持的驱动</h2><h2 id="常用的函数"><a href="#常用的函数" class="headerlink" title="常用的函数"></a>常用的函数</h2><h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><h4 id="beginTransaction"><a href="#beginTransaction" class="headerlink" title="beginTransaction"></a>beginTransaction</h4><p><strong>说明</strong></p>
+<p><code>PDO::beginTransaction(): bool</code></p>
+<p>关闭自动提交模式。自动提交模式被关闭的同时，通过 PDO 对象实例对数据库做出的更改直到调用 PDO::commit() 结束事务才被提交。调用 PDO::rollBack() 将回滚对数据库做出的更改并将数据库连接返回到自动提交模式。</p>
+<p>包括 MySQL 在内的一些数据库，当发出一条类似 DROP TABLE 或 CREATE TABLE 这样的 DDL 语句时，会自动进行一个隐式地事务提交。隐式地提交将阻止你在此事务范围内回滚任何其他更改。</p>
+<p><strong>返回值</strong></p>
+<p>成功时返回 true， 或者在失败时返回 false。</p>
+<h4 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h4><p><strong>说明</strong></p>
+<p><code>PDO::commit(): bool</code></p>
+<p>提交一个事务，数据库连接返回到自动提交模式直到下次调用 PDO::beginTransaction() 开始一个新的事务为止。</p>
+<p><strong>返回值</strong></p>
+<p>成功时返回 true， 或者在失败时返回 false。</p>
+<h4 id="rollBack"><a href="#rollBack" class="headerlink" title="rollBack"></a>rollBack</h4><p><strong>说明</strong></p>
+<p><code>PDO::rollBack(): bool</code></p>
+<p>回滚由 PDO::beginTransaction() 发起的当前事务。如果没有事务激活，将抛出一个 PDOException 异常。</p>
+<p>如果数据库被设置成自动提交模式，此函数（方法）在回滚事务之后将恢复自动提交模式。</p>
+<p>包括 MySQL 在内的一些数据库， 当在一个事务内有类似删除或创建数据表等 DLL 语句时，会自动导致一个隐式地提交。隐式地提交将无法回滚此事务范围内的任何更改。</p>
+<p><strong>返回值</strong></p>
+<p>成功时返回 true， 或者在失败时返回 false。</p>
+<h3 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h3><h4 id="construct"><a href="#construct" class="headerlink" title="construct"></a>construct</h4><p><strong>说明</strong></p>
+<p><code>PDO::__construct( string $dsn, string $username = ?, string $password = ?, array $driver_options = ?)</code></p>
+<p>创建一个表示连接到请求数据库的数据库连接 PDO 实例。</p>
+<p><strong>参数</strong></p>
+<ul>
+<li>dsn 数据源名称或叫做 DSN，包含了请求连接到数据库的信息。</li>
+<li>username DSN字符串中的用户名。对于某些PDO驱动，此参数为可选项。</li>
+<li>password DSN字符串中的密码。对于某些PDO驱动，此参数为可选项。</li>
+<li>driver_options 一个具体驱动的连接选项的键=&gt;值数组。</li>
+</ul>
+<p>关于 dsn 和  driver_options 配置可以在 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/pdo.drivers.php">PDO驱动</a> 查找</p>
+<p><strong>返回值</strong></p>
+<p>成功则返回一个PDO对象。</p>
+<p><strong>错误／异常</strong></p>
+<p>如果试图连接到请求的数据库失败，则<code>PDO::__construct()</code> 抛出一个 PDO异常（PDOException） 。</p>
+<p><strong>Example</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$dsn</span> = <span class="string">&quot;mysql:dbname=test;port=3306;host=192.168.10.10&quot;</span>;</span><br><span class="line"><span class="variable">$user_name</span> = <span class="string">&quot;demodeom&quot;</span>;</span><br><span class="line"><span class="variable">$user_password</span> = <span class="string">&quot;123456&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="variable">$dbh</span> = <span class="keyword">new</span> PDO(<span class="variable">$dsn</span>, <span class="variable">$user_name</span>, <span class="variable">$user_password</span>);</span><br><span class="line">&#125;<span class="keyword">catch</span>(PDOException <span class="variable">$e</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;connect failed &quot;</span> . <span class="variable">$e</span>-&gt;getMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="执行-SQL-语句"><a href="#执行-SQL-语句" class="headerlink" title="执行 SQL 语句"></a>执行 SQL 语句</h3><h4 id="exec"><a href="#exec" class="headerlink" title="exec"></a>exec</h4><p><strong>说明</strong></p>
+<p>PDO::exec(string $statement): int</p>
+<p>PDO::exec() 在一个单独的函数调用中执行一条 SQL 语句，返回受此语句影响的行数。</p>
+<p>PDO::exec() 不会从一条 SELECT 语句中返回结果。对于在程序中只需要发出一次的 SELECT 语句，可以考虑使用 PDO::query()。对于需要发出多次的语句，可用 PDO::prepare() 来准备一个 PDOStatement 对象并用 PDOStatement::execute() 发出语句。</p>
+<p><strong>参数</strong></p>
+<p>statement 要被预处理和执行的 SQL 语句。</p>
+<p><strong>返回值</strong></p>
+<p>PDO::exec() 返回受修改或删除 SQL 语句影响的行数。如果没有受影响的行，则 PDO::exec() 返回 0。 </p>
+<h4 id="query"><a href="#query" class="headerlink" title="query"></a>query</h4><p><strong>说明</strong></p>
+<p><code>public PDO::query(string $statement): PDOStatement</code><br><code>public PDO::query(string $statement, int $PDO::FETCH_COLUMN, int $colno): PDOStatement</code><br><code>public PDO::query(string $statement,int $PDO::FETCH_CLASS,string $classname,array $ctorargs): PDOStatement</code><br><code>public PDO::query(string $statement, int $PDO::FETCH_INTO, object $object): PDOStatement</code></p>
+<p>PDO::query() 在单次函数调用内执行 SQL 语句，以 PDOStatement 对象形式返回结果集（如果有数据的话）。</p>
+<p>如果反复调用同一个查询，用 PDO::prepare() 准备 PDOStatement 对象，并用 PDOStatement::execute() 执行语句，将具有更好的性能。</p>
+<p>如果没有完整获取结果集内的数据，就调用下一个 PDO::query()，将可能调用失败。 应当在执行下一个 PDO::query() 前，先用 PDOStatement::closeCursor() 释放数据库PDOStatement 关联的资源。</p>
+<p>如果传入函数的参数数量超过一个，多余的参数将相当于调用结果对象 PDOStatement::setFetchMode() 方法。</p>
+<p><strong>参数</strong></p>
+<p>statement 需要准备、执行的 SQL 语句。</p>
+<p><strong>返回值</strong></p>
+<p>PDO::query() 返回 PDOStatement 对象，或在失败时返回 false。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/15/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8BPDO/" data-id="cky6kogwa0011rsuqeagceguk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PDO/" rel="tag">PDO</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/08/15/PHP/PHP-%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          PHP 版本支持
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/15/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8BJson/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">PHP扩展之Json</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java-%E5%9F%BA%E7%A1%80/">Java 基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCv/">OpenCv</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Boot/">Spring Boot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swoole/">Swoole</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue3/">Vue3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Win/">Win</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/" rel="tag">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/" rel="tag">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" rel="tag">Java 日期时间</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/" rel="tag">Json</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCv/" rel="tag">OpenCv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDO/" rel="tag">PDO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RedisServer/" rel="tag">RedisServer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMwareWorkstationPro/" rel="tag">VMwareWorkstationPro</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/" rel="tag">VirtualBox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win/" rel="tag">Win</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win10-Win11-WinGet/" rel="tag">Win10 Win11 WinGet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WinGet/" rel="tag">WinGet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" rel="tag">信号量</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" rel="tag">共享内存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%8C%BA/" rel="tag">分区</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" rel="tag">开发环境</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%88%E6%9C%AC/" rel="tag">版本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/" rel="tag">视频播放器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="tag">面向对象</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Install/" style="font-size: 10px;">Install</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" style="font-size: 10px;">Java 日期时间</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/OCR/" style="font-size: 10px;">OCR</a> <a href="/tags/OpenCv/" style="font-size: 10px;">OpenCv</a> <a href="/tags/PDO/" style="font-size: 10px;">PDO</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/RedisServer/" style="font-size: 10px;">RedisServer</a> <a href="/tags/Ubuntu/" style="font-size: 13.33px;">Ubuntu</a> <a href="/tags/VMwareWorkstationPro/" style="font-size: 10px;">VMwareWorkstationPro</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/Win/" style="font-size: 16.67px;">Win</a> <a href="/tags/Win10-Win11-WinGet/" style="font-size: 10px;">Win10 Win11 WinGet</a> <a href="/tags/WinGet/" style="font-size: 10px;">WinGet</a> <a href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" style="font-size: 10px;">信号量</a> <a href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" style="font-size: 13.33px;">共享内存</a> <a href="/tags/%E5%88%86%E5%8C%BA/" style="font-size: 10px;">分区</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 10px;">安装</a> <a href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" style="font-size: 20px;">开发环境</a> <a href="/tags/%E7%89%88%E6%9C%AC/" style="font-size: 10px;">版本</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 13.33px;">笔记</a> <a href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/" style="font-size: 10px;">视频播放器</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 10px;">面向对象</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E8%BD%AF%E4%BB%B6-%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/">Ubuntu 软件-视频播放器</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Node-js/">Ubuntu 搭建开发环境-Node.js</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Python/">Ubuntu 搭建开发环境-Python</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Java/">Ubuntu 搭建开发环境-Java</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

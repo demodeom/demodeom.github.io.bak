@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>PHP扩展之IPC | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PHP操作消息队列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP扩展之IPC">
+<meta property="og:url" content="http://example.com/2021/08/07/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8BIPC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PHP操作消息队列">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-06T21:36:02.000Z">
+<meta property="article:modified_time" content="2022-01-08T23:25:54.293Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="共享内存">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-PHP/PHP扩展之IPC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/08/07/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8BIPC/" class="article-date">
+  <time datetime="2021-08-06T21:36:02.000Z" itemprop="datePublished">2021-08-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PHP/">PHP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PHP扩展之IPC
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>PHP操作消息队列</p>
+<span id="more"></span>
+
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
+<p>IPC（Inter-Process Communication，进程间通信）。进程间通信是指两个进程的数据之间产生交互</p>
+</blockquote>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>使用 <code> --enable-sysvmsg</code> 编译 PHP</p>
+<p>检查 <code>sysvsem</code> 是否安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ php -m | grep sysvmsg</span><br><span class="line">sysvmsg</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="主要函数"><a href="#主要函数" class="headerlink" title="主要函数"></a>主要函数</h2><ul>
+<li>msg_get_queue - 创建或附加到一个消息队列上</li>
+<li>msg_queue_exists - 检查一个消息队列是否存在</li>
+<li>msg_receive - 从一个消息队列中接收一个消息</li>
+<li>msg_remove_queue - 销毁一个消息队列</li>
+<li>msg_send - 向一个消息队列发送一条消息</li>
+<li>msg_set_queue - 设置消息队列数据结构中的信息</li>
+<li>msg_stat_queue - 返回来自消息队列数据结构的信息</li>
+</ul>
+<h3 id="msg-get-queue"><a href="#msg-get-queue" class="headerlink" title="msg_get_queue"></a>msg_get_queue</h3><p><strong>语法:</strong></p>
+<p><code>msg_get_queue(int $key, int $permissions = 0666): SysvMessageQueue|false</code></p>
+<p><strong>功能:</strong> </p>
+<p>msg_get_queue()返回一个ID，可用于访问具有给定键的System V消息队列。第一次调用会创建有可选权限的消息队列。第二次调用msg_get_queue()相同的键会返回一个不同的消息队列标识符，但这两个标识符访问的是同一个底层消息队列。</p>
+<p><strong>参数:</strong> </p>
+<ul>
+<li>key  消息队列数字 ID</li>
+<li>permissions 队列权限。默认为0666。如果消息队列已经存在，权限将被忽略。</li>
+</ul>
+<p><strong>返回值:</strong> </p>
+<p>返回SysvMessageQueue实例，可用于访问System V消息队列，或者在失败时返回false。</p>
+<h3 id="msg-queue-exists"><a href="#msg-queue-exists" class="headerlink" title="msg_queue_exists"></a>msg_queue_exists</h3><p><strong>语法:</strong></p>
+<p><code>msg_queue_exists(int $key): bool</code></p>
+<p>检查消息队列键是否存在。</p>
+<p><strong>参数:</strong> </p>
+<ul>
+<li>key 队列键。</li>
+</ul>
+<p><strong>返回值:</strong> </p>
+<p>成功时返回 true， 或者在失败时返回 false。</p>
+<h3 id="msg-receive"><a href="#msg-receive" class="headerlink" title="msg_receive"></a>msg_receive</h3><p><strong>语法:</strong></p>
+<p><code>msg_receive(     SysvMessageQueue $queue,     int $desired_message_type,     int &amp;$received_message_type,     int $max_message_size,     mixed &amp;$message,     bool $unserialize = true,     int $flags = 0,     int &amp;$error_code = null ): bool</code></p>
+<p><strong>功能:</strong> </p>
+<p>msg_receive() 将接收来自desired_message_type 指定类型的指定队列的第一条消息。</p>
+<p><strong>参数:</strong> </p>
+<ul>
+<li>queue 消息队列。</li>
+<li>desired_message_type 如果desired_message_type为0，则返回队列中最前面的那个消息。如果desired_message_type大于0，那么将返回该类型的第一条消息。如果desired_message_type小于0，将读取队列中第一个类型小于或等于desired_message_type绝对值的消息。如果没有符合条件的消息，你的脚本将等待，直到队列中出现合适的消息。你可以通过在flags参数中指定MSG_IPC_NOWAIT来防止脚本阻塞。</li>
+<li>received_message_type 收到的信息的类型将被存储在这个参数中。</li>
+<li>max_message_size 要接受的消息的最大尺寸由max_message_size指定；如果队列中的消息大于这个尺寸，该函数将失败（除非你设置了下面描述的标志）。</li>
+<li>message 收到的信息将被储存在信息中，除非接收信息时有错误。</li>
+<li>unserialize 如果设置为 “true”，消息会被当作使用与会话模块相同的机制进行序列化处理。消息将被取消序列化，然后返回给你的脚本。这允许你轻松地从其他PHP脚本中接收数组或复杂的对象结构，或者如果你使用WDDX序列化器，从任何WDDX兼容的源中接收。如果 unserialize 为 false，则消息将作为二进制安全字符串返回。</li>
+<li>flags 可选标志允许您将标志传递给低级 msgrcv 系统调用。它默认为 0，但您可以指定一个或多个以下值（通过将它们相加或或运算在一起）。</li>
+<li>error_code 如果函数失败，可选的 error_code 将被设置为系统 errno 变量的值。</li>
+</ul>
+<center><b>msg_receive 的 flag</b></center>
+
+<table>
+<thead>
+<tr>
+<th align="left">标志</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">MSG_IPC_NOWAIT</td>
+<td align="left">如果没有所需信息类型的信息，立即返回，不要等待。该函数将失败，并返回一个对应于MSG_ENOMSG的整数值。</td>
+</tr>
+<tr>
+<td align="left">MSG_EXCEPT</td>
+<td align="left">将此标志与大于 0 的 desired_message_type 结合使用将导致函数接收不等于 desired_message_type 的第一条消息。</td>
+</tr>
+<tr>
+<td align="left">MSG_NOERROR</td>
+<td align="left">如果消息长于max_message_size，设置这个标志将把消息截断到max_message_size，并且不会发出错误信号。</td>
+</tr>
+</tbody></table>
+<p><strong>返回值:</strong> </p>
+<p>成功时返回 true， 或者在失败时返回 false。</p>
+<p>成功完成后，消息队列数据结构更新如下：msg_lrpid 设置为调用进程的进程 ID，msg_qnum 减 1，msg_rtime 设置为当前时间。</p>
+<h3 id="msg-remove-queue"><a href="#msg-remove-queue" class="headerlink" title="msg_remove_queue"></a>msg_remove_queue</h3><p><strong>语法:</strong></p>
+<p>msg_remove_queue(SysvMessageQueue $queue): bool</p>
+<p><strong>功能:</strong> </p>
+<p>msg_remove_queue() 销毁队列指定的消息队列。只有当所有进程都完成了消息队列的工作并且需要释放它所持有的系统资源时才使用此功能。</p>
+<p><strong>参数:</strong> </p>
+<ul>
+<li>queue 消息队列。</li>
+</ul>
+<p><strong>返回值:</strong> </p>
+<p>成功时返回 true， 或者在失败时返回 false。</p>
+<h3 id="msg-send"><a href="#msg-send" class="headerlink" title="msg_send"></a>msg_send</h3><p><strong>语法:</strong></p>
+<p><code>msg_send(     SysvMessageQueue $queue,     int $message_type,     string|int|float|bool $message,     bool $serialize = true,     bool $blocking = true,     int &amp;$error_code = null ): bool</code></p>
+<p><strong>功能:</strong> </p>
+<p>msg_send() 将 message_type 类型的消息（必须大于 0）发送到 queue 指定的消息队列。</p>
+<p><strong>参数:</strong> </p>
+<ul>
+<li>queue 消息队列。</li>
+<li>message_type 消息的类型（必须大于 0）</li>
+<li>message 消息的正文。</li>
+<li>serialize 可选的序列化控制消息的发送方式。 serialize 默认为 true，这意味着消息在发送到队列之前使用与会话模块相同的机制进行序列化。这允许将复杂的数组和对象发送到其他 PHP 脚本，或者如果您使用的是 WDDX 序列化程序，则可以发送到任何 WDDX 兼容客户端。</li>
+<li>blocking 如果消息太大而无法放入队列，您的脚本将等待另一个进程从队列中读取消息并释放足够的空间来发送您的消息。这称为阻塞；您可以通过将可选的阻塞参数设置为 false 来防止阻塞，在这种情况下，如果消息对于队列来说太大，msg_send() 将立即返回 false，并将可选的 error_code 设置为 MSG_EAGAIN，表示您应该尝试发送您的消息再过一会儿。</li>
+<li>error_code 如果函数失败，可选的错误代码将被设置为系统 errno 变量的值。</li>
+</ul>
+<p>如果提供的serialize设置为false，必须是字符串、int、float或bool类型。在其他情况下，将发出一个警告。</p>
+<p><strong>返回值:</strong> </p>
+<p>成功时返回 true， 或者在失败时返回 false。</p>
+<p>成功完成后，消息队列数据结构被更新如下：msg_lspid被设置为调用进程的进程ID，msg_qnum被递增1，msg_stime被设置为当前时间。</p>
+<h3 id="msg-set-queue"><a href="#msg-set-queue" class="headerlink" title="msg_set_queue"></a>msg_set_queue</h3><p><strong>语法:</strong></p>
+<p><code>msg_set_queue(SysvMessageQueue $queue, array $data): bool</code></p>
+<p><strong>功能:</strong> </p>
+<p>msg_set_queue() 允许您更改底层消息队列数据结构的 msg_perm.uid、msg_perm.gid、msg_perm.mode 和 msg_qbytes 字段的值。</p>
+<p>改变数据结构将要求 PHP 以创建队列的同一用户身份运行，拥有该队列（由现有的 msg_perm.xxx 字段决定），或以 root 权限运行。要将 msg_qbytes 的值提高到系统定义的极限以上，需要 root 权限。</p>
+<p><strong>参数:</strong> </p>
+<ul>
+<li>queue 消息队列。</li>
+<li>data 你通过设置数据数组中你需要的键值来指定你所需要的值。</li>
+</ul>
+<p>成功时返回 true， 或者在失败时返回 false。</p>
+<p><strong>语法:</strong></p>
+<p><code>msg_stat_queue(SysvMessageQueue $queue): array|false</code></p>
+<p><strong>功能:</strong> </p>
+<p>msg_stat_queue() 返回队列指定的消息队列的消息队列元数据。例如，这有助于确定哪个进程发送了刚刚收到的消息。</p>
+<p><strong>参数:</strong> </p>
+<ul>
+<li>queue 消息队列。</li>
+</ul>
+<p><strong>返回值:</strong> </p>
+<p>成功时，返回值是一个数组，其键和值具有以下含义：</p>
+<center><b>msg_stat_queue 的数组结构</b></center>
+
+<table>
+<thead>
+<tr>
+<th align="left">字段</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">msg_perm.uid</td>
+<td align="left">队列所有者的 uid。</td>
+</tr>
+<tr>
+<td align="left">msg_perm.gid</td>
+<td align="left">队列所有者的 gid。</td>
+</tr>
+<tr>
+<td align="left">msg_perm.mode</td>
+<td align="left">队列的文件访问模式。</td>
+</tr>
+<tr>
+<td align="left">msg_stime</td>
+<td align="left">最后一条消息发送到队列的时间。</td>
+</tr>
+<tr>
+<td align="left">msg_rtime</td>
+<td align="left">从队列中接收到最后一条消息的时间。</td>
+</tr>
+<tr>
+<td align="left">msg_ctime</td>
+<td align="left">上次更改队列的时间。</td>
+</tr>
+<tr>
+<td align="left">msg_qnum</td>
+<td align="left">等待从队列中读取的消息数。</td>
+</tr>
+<tr>
+<td align="left">msg_qbytes</td>
+<td align="left">一个消息队列中允许的最大字节数。在 Linux 上，可以通过 /proc/sys/kernel/msgmnb 读取和修改此值。</td>
+</tr>
+<tr>
+<td align="left">msg_lspid</td>
+<td align="left">将最后一条消息发送到队列的进程的 pid。</td>
+</tr>
+<tr>
+<td align="left">msg_lrpid</td>
+<td align="left">从队列接收最后一条消息的进程的 pid。</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/07/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8BIPC/" data-id="cky6kogw9000zrsuqdepyeklw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" rel="tag">共享内存</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/08/12/Spring%20Boot/12.%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          文件上传和下载
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/07/PHP/PHP%E6%89%A9%E5%B1%95%E4%B9%8B%E5%86%85%E5%AD%98%E5%85%B1%E4%BA%AB/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">PHP扩展之共享内存</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java-%E5%9F%BA%E7%A1%80/">Java 基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCv/">OpenCv</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Boot/">Spring Boot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swoole/">Swoole</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue3/">Vue3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Win/">Win</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/" rel="tag">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/" rel="tag">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" rel="tag">Java 日期时间</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/" rel="tag">Json</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCv/" rel="tag">OpenCv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDO/" rel="tag">PDO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RedisServer/" rel="tag">RedisServer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMwareWorkstationPro/" rel="tag">VMwareWorkstationPro</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/" rel="tag">VirtualBox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win/" rel="tag">Win</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win10-Win11-WinGet/" rel="tag">Win10 Win11 WinGet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WinGet/" rel="tag">WinGet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" rel="tag">信号量</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" rel="tag">共享内存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%8C%BA/" rel="tag">分区</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" rel="tag">开发环境</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%88%E6%9C%AC/" rel="tag">版本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/" rel="tag">视频播放器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="tag">面向对象</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Install/" style="font-size: 10px;">Install</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" style="font-size: 10px;">Java 日期时间</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/OCR/" style="font-size: 10px;">OCR</a> <a href="/tags/OpenCv/" style="font-size: 10px;">OpenCv</a> <a href="/tags/PDO/" style="font-size: 10px;">PDO</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/RedisServer/" style="font-size: 10px;">RedisServer</a> <a href="/tags/Ubuntu/" style="font-size: 13.33px;">Ubuntu</a> <a href="/tags/VMwareWorkstationPro/" style="font-size: 10px;">VMwareWorkstationPro</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/Win/" style="font-size: 16.67px;">Win</a> <a href="/tags/Win10-Win11-WinGet/" style="font-size: 10px;">Win10 Win11 WinGet</a> <a href="/tags/WinGet/" style="font-size: 10px;">WinGet</a> <a href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" style="font-size: 10px;">信号量</a> <a href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" style="font-size: 13.33px;">共享内存</a> <a href="/tags/%E5%88%86%E5%8C%BA/" style="font-size: 10px;">分区</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 10px;">安装</a> <a href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" style="font-size: 20px;">开发环境</a> <a href="/tags/%E7%89%88%E6%9C%AC/" style="font-size: 10px;">版本</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 13.33px;">笔记</a> <a href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/" style="font-size: 10px;">视频播放器</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 10px;">面向对象</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E8%BD%AF%E4%BB%B6-%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/">Ubuntu 软件-视频播放器</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Node-js/">Ubuntu 搭建开发环境-Node.js</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Python/">Ubuntu 搭建开发环境-Python</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Java/">Ubuntu 搭建开发环境-Java</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

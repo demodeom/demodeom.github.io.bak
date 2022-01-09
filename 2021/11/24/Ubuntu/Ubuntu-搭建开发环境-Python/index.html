@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Ubuntu 搭建开发环境-Python | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Python 多版本管理 pyenv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 搭建开发环境-Python">
+<meta property="og:url" content="http://example.com/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Python/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Python 多版本管理 pyenv">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-24T02:26:59.000Z">
+<meta property="article:modified_time" content="2022-01-08T23:25:54.295Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="开发环境">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Ubuntu/Ubuntu-搭建开发环境-Python" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Python/" class="article-date">
+  <time datetime="2021-11-24T02:26:59.000Z" itemprop="datePublished">2021-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Ubuntu/">Ubuntu</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ubuntu 搭建开发环境-Python
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Python 多版本管理 <a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv">pyenv</a></p>
+<span id="more"></span>
+
+<h2 id="安装-pyenv"><a href="#安装-pyenv" class="headerlink" title="安装 pyenv"></a>安装 pyenv</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://hub.fastgit.org/pyenv/pyenv.git ~/.pyenv</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置-pyenv"><a href="#配置-pyenv" class="headerlink" title="配置 pyenv"></a>配置 pyenv</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export PYENV_ROOT=&quot;$HOME/.pyenv&quot;</span><br><span class="line">export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;    # if `pyenv` is not already on PATH</span><br><span class="line">eval &quot;$(pyenv init --path)&quot;</span><br><span class="line">eval &quot;$(pyenv init -)&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装-Python"><a href="#安装-Python" class="headerlink" title="安装 Python"></a>安装 Python</h2><h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p><a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv/wiki#suggested-build-environment">编译依赖</a></p>
+<p>Ubuntu</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \</span><br><span class="line">libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \</span><br><span class="line">libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-Python-1"><a href="#安装-Python-1" class="headerlink" title="安装 Python"></a>安装 Python</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv install 3.10.0</span><br></pre></td></tr></table></figure>
+
+<p>设置默认 Python 版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv default 3.10.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h2><p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -o https://bootstrap.pypa.io/get-pip.py get-pip.py</span><br><span class="line">python get-pip.py</span><br></pre></td></tr></table></figure>
+
+<p>国内源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip config --global <span class="built_in">set</span> global.index-url https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line">pip config --global <span class="built_in">set</span> install.trusted-host mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<p>Linux 使用次命令可能会有权限问题， 解决方法： 使用 <code>--user</code> 代替 <code>--global</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip config --user <span class="built_in">set</span> global.index-url https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line">pip config --user <span class="built_in">set</span> install.trusted-host mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<p>参考文章</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013771353/article/details/103150362">pip全局设置镜像源</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Python/" data-id="cky6kogwt002ursuqesre8mqw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" rel="tag">开发环境</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Node-js/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Ubuntu 搭建开发环境-Node.js
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Java/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Ubuntu 搭建开发环境-Java</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java-%E5%9F%BA%E7%A1%80/">Java 基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/OpenCv/">OpenCv</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Boot/">Spring Boot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swoole/">Swoole</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ubuntu/">Ubuntu</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue3/">Vue3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Win/">Win</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/" rel="tag">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/" rel="tag">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" rel="tag">Java 日期时间</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Json/" rel="tag">Json</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OCR/" rel="tag">OCR</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCv/" rel="tag">OpenCv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDO/" rel="tag">PDO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RedisServer/" rel="tag">RedisServer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VMwareWorkstationPro/" rel="tag">VMwareWorkstationPro</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/" rel="tag">VirtualBox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win/" rel="tag">Win</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Win10-Win11-WinGet/" rel="tag">Win10 Win11 WinGet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WinGet/" rel="tag">WinGet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" rel="tag">信号量</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" rel="tag">共享内存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%8C%BA/" rel="tag">分区</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%89%E8%A3%85/" rel="tag">安装</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" rel="tag">开发环境</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%88%E6%9C%AC/" rel="tag">版本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag">笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/" rel="tag">视频播放器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="tag">面向对象</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Install/" style="font-size: 10px;">Install</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Java-%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4/" style="font-size: 10px;">Java 日期时间</a> <a href="/tags/Json/" style="font-size: 10px;">Json</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/OCR/" style="font-size: 10px;">OCR</a> <a href="/tags/OpenCv/" style="font-size: 10px;">OpenCv</a> <a href="/tags/PDO/" style="font-size: 10px;">PDO</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/RedisServer/" style="font-size: 10px;">RedisServer</a> <a href="/tags/Ubuntu/" style="font-size: 13.33px;">Ubuntu</a> <a href="/tags/VMwareWorkstationPro/" style="font-size: 10px;">VMwareWorkstationPro</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/Win/" style="font-size: 16.67px;">Win</a> <a href="/tags/Win10-Win11-WinGet/" style="font-size: 10px;">Win10 Win11 WinGet</a> <a href="/tags/WinGet/" style="font-size: 10px;">WinGet</a> <a href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" style="font-size: 10px;">信号量</a> <a href="/tags/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" style="font-size: 13.33px;">共享内存</a> <a href="/tags/%E5%88%86%E5%8C%BA/" style="font-size: 10px;">分区</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 10px;">安装</a> <a href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" style="font-size: 20px;">开发环境</a> <a href="/tags/%E7%89%88%E6%9C%AC/" style="font-size: 10px;">版本</a> <a href="/tags/%E7%AC%94%E8%AE%B0/" style="font-size: 13.33px;">笔记</a> <a href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/" style="font-size: 10px;">视频播放器</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 10px;">面向对象</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/09/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E8%BD%AF%E4%BB%B6-%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8/">Ubuntu 软件-视频播放器</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Node-js/">Ubuntu 搭建开发环境-Node.js</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Python/">Ubuntu 搭建开发环境-Python</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/24/Ubuntu/Ubuntu-%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-Java/">Ubuntu 搭建开发环境-Java</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
