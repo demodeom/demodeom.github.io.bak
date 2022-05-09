@@ -14,7 +14,7 @@
 <meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-09T04:51:12.689Z">
-<meta property="article:modified_time" content="2022-05-09T04:59:12.741Z">
+<meta property="article:modified_time" content="2022-05-09T05:05:23.040Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -110,11 +110,15 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h4 id="Git-自动部署"><a href="#Git-自动部署" class="headerlink" title="Git 自动部署"></a>Git 自动部署</h4><p>安装 hexo-deployer-git</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 
+<p>修改配置</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&lt;repository</span> <span class="string">url&gt;</span> <span class="comment">#https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span></span><br><span class="line">  <span class="attr">branch:</span> [<span class="string">branch</span>]</span><br><span class="line">  <span class="attr">message:</span> [<span class="string">message</span>]</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/09/hello-world/" data-id="cl2y98a8j00004snlg8fn6shn" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/09/hello-world/" data-id="cl2yb92520006bwnlb71l5dcu" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
@@ -122,6 +126,20 @@
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/2022/05/09/SpringBootSecurity/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SpringBootSecurity
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
   
 </article>
 
@@ -134,9 +152,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JetBrain/" rel="tag">JetBrain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/JetBrain/" style="font-size: 10px;">JetBrain</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -153,6 +185,14 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/05/09/JetBrain-%E6%BF%80%E6%B4%BB/">JetBrain 激活</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/09/SpringBootSecurity/">SpringBootSecurity</a>
+          </li>
         
           <li>
             <a href="/2022/05/09/hello-world/">Hello World</a>
